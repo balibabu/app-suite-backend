@@ -2,24 +2,8 @@ from rest_framework.decorators import api_view,permission_classes,authentication
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework import generics
-from .serializers import FolderSerializer,  FileSerializer, SharedFileSerializer
-from .models import Folder, File, SharedFile
-
-class FolderListCreateView(generics.ListCreateAPIView):
-    serializer_class=FolderSerializer
-    permission_classes=[IsAuthenticated]
-    def get_queryset(self):
-        return Folder.objects.filter(user=self.request.user)
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
-
-class FolderUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class=FolderSerializer
-    permission_classes=[IsAuthenticated]
-    def get_queryset(self):
-        return Folder.objects.filter(user=self.request.user)
-    
+from storage.serializers import FolderSerializer,  FileSerializer, SharedFileSerializer
+from storage.models import Folder, File, SharedFile
 
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
@@ -45,4 +29,4 @@ def getFilesAndFolders(request):
         'folders':folder_serializer.data,
         'sharedToMe':sharedFilesToMe_serializer.data,
         'sharedByMe':sharedFilesByMe_serializer.data
-        })
+    })

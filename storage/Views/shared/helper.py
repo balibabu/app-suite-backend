@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from storage.models import  File
-from storage.utility.hasher import getHash    
+from storage.Views.shared.hasher import getHash    
 import random
 
 def shareFileHelper(request):

@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from .models import Folder, File, SharedFile
-from git.serializers import FileInfoSerializer
 
 class FolderSerializer(serializers.ModelSerializer):
     class Meta:

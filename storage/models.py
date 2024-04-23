@@ -9,7 +9,7 @@ class Folder(models.Model):
 
 class File(models.Model):
     title = models.CharField(max_length=255)
-    size=models.CharField(max_length=12)
+    size=models.PositiveBigIntegerField()
     timestamp = models.DateTimeField(auto_now_add=True)
     inside = models.ForeignKey(Folder, null=True, blank=True, on_delete=models.SET_NULL)
     fileId=models.ForeignKey(FileId,on_delete=models.CASCADE)

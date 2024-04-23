@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 class FileId(models.Model):
@@ -30,3 +31,11 @@ class RepoSize(models.Model):
     @classmethod
     def get_repos(cls):
         return cls.objects.all().values_list('name', flat=True)
+
+
+class FileInProgress(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    fileId=models.ForeignKey(FileId,on_delete=models.CASCADE)
+    chunkCount=models.IntegerField()
+    
