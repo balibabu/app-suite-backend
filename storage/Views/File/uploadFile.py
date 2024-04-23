@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 from storage.serializers import FileSerializer
 from git.extra.fileInProgressManager import create_fip, store_chunk, upload_chunk, complete_cleanup
-from storage.models import File
+from storage.models import File, Folder
 from git.extra.config import Configurations
 
 
@@ -20,7 +20,9 @@ def receive_file_info(request):
     user=request.user
     size=int(request.data.get('size'))
     filename=request.data.get('filename')
-    inside=None if request.data.get('inside')=='null' else request.data.get('inside')
+    inside=request.data.get('inside','null')
+    if inside=='null': inside=None
+    else: inside=Folder.objects.get(id=inside)
 
     fip=create_fip(size,user)
     File.objects.create(
