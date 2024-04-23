@@ -45,7 +45,7 @@ def complete_cleanup(fipId):
     raise Exception()  # make it missing file exception
 
 def incomplete_cleanup():
-    expiredTime = timezone.now() - timedelta(minutes=1)
+    expiredTime = timezone.now() - timedelta(minutes=45)
     fips = FileInProgress.objects.filter(timestamp__lte=expiredTime)
     for fip in fips:
         delete(fip)
