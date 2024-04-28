@@ -5,7 +5,7 @@ from storage.serializers import FileSerializer
 from rest_framework import generics
 from storage.models import File
 
-from .downloadFile import get_chunk_list, download_chunk
+from .downloadFile import get_chunk_list, download_chunk, download_small_file
 from .deleteFile import delete_file
 
 
@@ -15,7 +15,8 @@ from .deleteFile import delete_file
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def getChunksOfaFile(request,id):
-    return get_chunk_list(id)
+    user=request.user
+    return get_chunk_list(user,id)
 
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
@@ -23,6 +24,13 @@ def getChunksOfaFile(request,id):
 def downloadChunk(request,id):
     user = request.user
     return download_chunk(user,id)
+
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def downloadSmallFile(request,id):
+    user = request.user
+    return download_small_file(user,id)
 
 
 

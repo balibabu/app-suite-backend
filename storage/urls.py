@@ -1,6 +1,6 @@
 from django.urls import path
 from .Views.File.view_create import uploadFile,uploadToGit,getAndCreateFile,cleanUp
-from .Views.File.view_rud import getChunksOfaFile, downloadChunk, UpdateFileView, deleteFile
+from .Views.File.view_rud import getChunksOfaFile, downloadChunk, UpdateFileView, deleteFile,downloadSmallFile
 from .Views.view_readFF import getFilesAndFolders
 from .Views.Folder.views import FolderListCreateView, FolderUpdateDeleteView
 from .Views.shared import viewShare
@@ -20,6 +20,7 @@ urlpatterns = [
 ## Download File
     path('chunks/<int:id>/',getChunksOfaFile,name='getChunksOfaFile'),
     path('download/chunk/<int:id>/',downloadChunk,name='downloadChunk'),
+    path('download/small/file/<int:id>/',downloadSmallFile,name='downloadSmallFile'),
 
 ## CRUD Folder
     path('folder/',FolderListCreateView.as_view(),name='folder-create-list'),
@@ -30,6 +31,8 @@ urlpatterns = [
 
 ## file sharing
     path('share/',viewShare.shareFile,name='shareFile'),
+    path('shared/file-info/<str:key>/',viewShare.getFileInfo,name='getFileInfo'),
     path('revoke/<int:id>/',viewShare.removePermission,name='removePermission'),
-    path('dsf/<str:id>/',viewShare.downloadSharedFile,name='downloadSharedFile'),
+    path('dsf/<str:id>/',viewShare.downloadSharedFileChunkList,name='downloadSharedFile'),
+    path('dsf/<str:id>/<int:cid>/',viewShare.downloadSharedFileChunk,name='downloadSharedFileChunk'),
 ]

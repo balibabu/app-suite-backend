@@ -16,21 +16,21 @@ class FileSerializer(serializers.ModelSerializer):
 class SharedFileSerializer(serializers.ModelSerializer):
     class Meta:
         model=SharedFile
-        fields = ['id',  'anyoneKey']
+        fields = '__all__'
         read_only_fields = ['sharedWith','file']
     
-    def to_representation(self, instance):
-        representation = super().to_representation(instance)
-        file_instance = instance.file
-        representation = {
-            'id': file_instance.id,
-            'title': file_instance.title,
-            'size': file_instance.size,
-            'timestamp': file_instance.timestamp,
-            'inside': file_instance.inside.id if file_instance.inside else None,
-            'user': file_instance.user.username,
-            'anyoneKey': instance.anyoneKey,
-            'sharedId':instance.id
+    # def to_representation(self, instance):
+    #     representation = super().to_representation(instance)
+    #     file_instance = instance.file
+    #     representation = {
+    #         'id': file_instance.id,
+    #         'title': file_instance.title,
+    #         'size': file_instance.size,
+    #         'timestamp': file_instance.timestamp,
+    #         'inside': file_instance.inside.id if file_instance.inside else None,
+    #         'user': file_instance.user.username,
+    #         'anyoneKey': instance.anyoneKey,
+    #         'sharedId':instance.id
 
-        }
-        return representation
+    #     }
+    #     return representation

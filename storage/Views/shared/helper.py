@@ -16,5 +16,5 @@ def shareFileHelper(request):
     shareWithAnyone=request.data.get('anyone',False)
     anyoneKey=None
     if shareWithAnyone:
-        anyoneKey=getHash(user.username+str(random.random)+fileId)
+        anyoneKey=getHash(user.username+str(random.random)+str(fileId))
     return file,sharedWith,anyoneKey

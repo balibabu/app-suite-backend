@@ -19,3 +19,5 @@ class SharedFile(models.Model):
     file=models.ForeignKey(File, on_delete=models.CASCADE)
     sharedWith=models.ForeignKey(User,on_delete=models.CASCADE, null=True)
     anyoneKey=models.CharField(max_length=32, null=True)
+    class Meta:
+        unique_together = ('file', 'sharedWith'), ('file', 'anyoneKey')
