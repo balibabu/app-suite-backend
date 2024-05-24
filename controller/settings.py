@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'photu',
     'utility',
     'git',
+    'blog'
 ]
 
 MIDDLEWARE = [

@@ -30,5 +30,6 @@ urlpatterns = [
     path('lunar/', include('lunar.urls')),
     path('photu/', include('photu.urls')),
     path('utility/', include('utility.urls')),
+    path('blog/', include('blog.urls')),
     
 ]
