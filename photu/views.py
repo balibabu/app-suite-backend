@@ -67,3 +67,18 @@ def deletePhoto(request,id):
     fm.delete(photo.original) # photo cascade w.r.t original/thumbnail
     fm.delete(photo.thumbnail)
     return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['POST'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def getSomePhotos(request):
+    user=request.user
+    ids=request.data.get('ids')
+    photos=Photo.objects.filter(user=user).order_by('-id')
+    serializer=PhotoSerializer(photos,many=True)
+    filteredList=[]
+    for photo in serializer.data:
+        if photo['id'] not in ids:
+            filteredList.append(photo)
+    return Response(filteredList)

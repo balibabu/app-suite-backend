@@ -34,3 +34,5 @@ admin.py
 config.py
 *.pkl
 migrations
+
+offline_testing
