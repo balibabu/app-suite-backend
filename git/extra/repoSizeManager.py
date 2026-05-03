@@ -29,7 +29,7 @@ class RepoSizeManager:
         for repo in repos:
             if RepoSizeManager._get_size(repo)<= Configurations.MAX_GIT_REPO_SIZE: #400MB
                 return repo
-        repo=str(int(time.time()))
+        repo=str(time.time()).replace('.','')
         git=GithubManager('dummy')
         git.create_repo(repo)
         return repo

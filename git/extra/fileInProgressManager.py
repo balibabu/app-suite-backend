@@ -22,7 +22,7 @@ def create_fip(size,user):
 def store_chunk(content,fipId):
     fip=FileInProgress.objects.get(id=fipId)
     repo=RepoSizeManager.get_free_repo()
-    chunkObject=Chunk.objects.create(fileId=fip.fileId,repo=repo,uname=str(int(time.time())),size=len(content))
+    chunkObject=Chunk.objects.create(fileId=fip.fileId,repo=repo,uname=str(time.time()).replace('.',''),size=len(content))
     cache.set(f'chunkId_{chunkObject.id}', content)
     RepoSizeManager.add_size(repo,size=len(content))
     return chunkObject.id

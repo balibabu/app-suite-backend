@@ -15,7 +15,7 @@ class FileManager:
             fileId = FileId.objects.create()
             for chunk in chunks:
                 repo=RepoSizeManager.get_free_repo()
-                uname=str(int(time.time()))
+                uname=str(time.time()).replace('.','')
                 self.git.upload_file(chunk,uname,repo)
                 Chunk.objects.create(fileId=fileId,repo=repo,uname=uname,size=len(chunk))
                 RepoSizeManager.add_size(repo,len(chunk))
