@@ -15,7 +15,7 @@ class GithubManager:
         repo.create_file(
             path=file_path_in_repo,
             message='uploaded '+filename,
-            content=fileContent,
+            content=enc,
         )
 
     def download_file(self,filename,repo_name):
