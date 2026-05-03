@@ -1,6 +1,7 @@
 from github import Github
 import base64
 from .config import Configurations
+from .crypto import encrypt_chunk, decrypt_chunk
 
 class GithubManager:
     def __init__(self,username) -> None:
@@ -10,6 +11,7 @@ class GithubManager:
     def upload_file(self,fileContent,filename,repo_name):
         repo = self.git.get_repo("storeage/"+repo_name)
         file_path_in_repo=f'{self.username}/{filename}'
+        enc=encrypt_chunk(fileContent, Configurations.MASTER_KEY)
         repo.create_file(
             path=file_path_in_repo,
             message='uploaded '+filename,
@@ -21,7 +23,7 @@ class GithubManager:
         file = repo.get_contents(f'{self.username}/{filename}')
         blob_content = repo.get_git_blob(file.sha).content
         content_bytes = base64.b64decode(blob_content)
-        return content_bytes
+        return decrypt_chunk(content_bytes, Configurations.MASTER_KEY)
 
     def create_repo(self,repo_name):
         user=self.git.get_user()
